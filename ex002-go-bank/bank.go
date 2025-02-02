@@ -64,14 +64,14 @@ func getBalanceFromFile() (float64, error) {
 	data, err := os.ReadFile(accountBalanceFile)
 
 	if err != nil {
-		return 1518, errors.New("Failed to find balance file.")
+		return 1518, errors.New("failed to find balance file")
 	}
 
 	balanceText := string(data)
 	balance, err := strconv.ParseFloat(balanceText, 32)
 
 	if err != nil {
-		return 1518, errors.New("Failed to parse stored balance value.")
+		return 1518, errors.New("failed to parse stored balance value")
 	}
 
 	return float64(balance), nil
