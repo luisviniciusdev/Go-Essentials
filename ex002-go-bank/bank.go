@@ -1,21 +1,23 @@
 package main
 
 import (
-	"errors"
 	"fmt"
-	"os"
-	"strconv"
+
+	"example.com/go-bank/fileops"
+	"github.com/Pallinder/go-randomdata"
 )
 
 func main() {
-	var accountBalance, err = getBalanceFromFile()
+	name := randomdata.FirstName(2)
+	var accountBalance, err = fileops.GetFloatFromFile(accountBalanceFile)
 
 	if err != nil {
 		fmt.Print(err)
 	}
 
 	for {
-		printBankMenu()
+
+		printBankMenu(name)
 		userInput := getUserInput()
 
 		switch userInput {
@@ -36,15 +38,6 @@ func main() {
 	}
 }
 
-func printBankMenu() {
-	fmt.Println("\n\nWelcome to Go Bank!")
-	fmt.Println("What do you want to do?")
-	fmt.Println("1. Check the balance")
-	fmt.Println("2. Deposit money")
-	fmt.Println("3. Withdraw money")
-	fmt.Println("4. Exit")
-}
-
 func getUserInput() int {
 	var userInput int
 	fmt.Print("\nYour Choice: ")
@@ -54,28 +47,6 @@ func getUserInput() int {
 }
 
 const accountBalanceFile string = "balance.txt"
-
-func writeBalanceToFile(balance float64) {
-	balanceText := fmt.Sprint(balance)
-	os.WriteFile(accountBalanceFile, []byte(balanceText), 0644)
-}
-
-func getBalanceFromFile() (float64, error) {
-	data, err := os.ReadFile(accountBalanceFile)
-
-	if err != nil {
-		return 1518, errors.New("failed to find balance file")
-	}
-
-	balanceText := string(data)
-	balance, err := strconv.ParseFloat(balanceText, 32)
-
-	if err != nil {
-		return 1518, errors.New("failed to parse stored balance value")
-	}
-
-	return float64(balance), nil
-}
 
 func checkUserBalance(userBalance float64) {
 	fmt.Printf("\nYour balance is: %.2f", userBalance)
@@ -93,7 +64,7 @@ func depositMoney(userBalance *float64) {
 
 	*userBalance += depositAmount
 	fmt.Printf("\nThe new Balance Amount is: %.2f", *userBalance)
-	writeBalanceToFile(*userBalance)
+	fileops.WriteFloatToFile(*userBalance, accountBalanceFile)
 }
 
 func withdrawMoney(userBalance *float64) {
@@ -108,5 +79,5 @@ func withdrawMoney(userBalance *float64) {
 
 	*userBalance -= withdrawAmount
 	fmt.Printf("\nThe new Balance Amount is: %.2f", *userBalance)
-	writeBalanceToFile(*userBalance)
+	fileops.WriteFloatToFile(*userBalance, accountBalanceFile)
 }
