@@ -13,11 +13,20 @@ type user struct {
 }
 
 func main() {
-	firstName := getUserInput("Please enter your first name: ")
-	lastName := getUserInput("Please enter your last name: ")
-	birthDate := getUserInput("Please enter your birthdate (MM/DD/YYYY): ")
+	userFirstName := getUserInput("Please enter your first name: ")
+	userLastName := getUserInput("Please enter your last name: ")
+	UserBirthDate := getUserInput("Please enter your birthdate (MM/DD/YYYY): ")
 
-	outputUserDatails(firstName, lastName, birthDate)
+	var appUser user
+
+	appUser = user{
+		firstName: userFirstName,
+		lastName:  userLastName,
+		birthDate: UserBirthDate,
+		createAt:  time.Now(),
+	}
+
+	outputUserDatails(appUser)
 }
 
 func getUserInput(question string) string {
@@ -28,6 +37,8 @@ func getUserInput(question string) string {
 	return userInput
 }
 
-func outputUserDatails(firstName, lastName, birthDate string) {
-	fmt.Println(firstName, lastName, birthDate)
+func outputUserDatails(user user) {
+	fmt.Println(user.firstName)
+	fmt.Println(user.lastName)
+	fmt.Println(user.birthDate)
 }
