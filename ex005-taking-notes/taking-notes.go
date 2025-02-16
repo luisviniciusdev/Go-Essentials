@@ -20,6 +20,10 @@ type outputtable interface {
 }
 
 func main() {
+	printSomething(1)
+	printSomething(3.14)
+	printSomething("Learning Golang")
+
 	title, content := getNoteData()
 	todoText := getUserInput("Todo text: ")
 
@@ -53,11 +57,26 @@ func main() {
 	outputData(userNote)
 }
 
-/*
-func getTodoDate() string {
-	return getUserInput("Todo Text: ")
+func printSomething(value interface{}) {
+	typeValue, ok := value.(string)
+
+	if ok {
+		fmt.Println("String: ", typeValue)
+	}
+
+	// or
+
+	switch value.(type) {
+	case int:
+		fmt.Println("Integer: ", value)
+	case float64:
+		fmt.Println("Float: ", value)
+	case string:
+		fmt.Println("String: ", value)
+	default:
+		// ...
+	}
 }
-*/
 
 func outputData(data outputtable) error {
 	data.Display()
