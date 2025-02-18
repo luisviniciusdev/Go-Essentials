@@ -5,27 +5,25 @@ import (
 )
 
 func main() {
-	userInput := getUserInput()
+	userInput := getUserInput("Wich method do you wanna use?\n1 - Any\n2 - Generics")
+	firstValue := getUserInput("Enter a first value: ")
+	secondValue := getUserInput("Enter a second value: ")
 
 	switch userInput {
 	case 1:
-		value := AddAny(10, 15)
+		value := AddAny(firstValue, secondValue)
 		fmt.Print(value)
 	case 2:
-		value := AddGenerics(20, 10)
+		value := AddGenerics(firstValue, secondValue)
 		fmt.Print(value)
 	default:
 		fmt.Print("Invalid digit")
 	}
 }
 
-func getUserInput() int {
+func getUserInput(message string) int {
 	var value int
-
-	fmt.Println("Wich method do you wanna use?")
-	fmt.Println("1 - Any")
-	fmt.Println("2 - Generics")
+	fmt.Println(message)
 	fmt.Scan(&value)
-
 	return value
 }
